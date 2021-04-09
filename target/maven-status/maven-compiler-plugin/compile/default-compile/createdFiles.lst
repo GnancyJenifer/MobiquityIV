@@ -1,0 +1,6 @@
+com\mobiquity\exception\APIException.class
+com\mobiquity\model\Item.class
+com\mobiquity\validator\Validator.class
+com\mobiquity\model\Package.class
+com\mobiquity\model\Line.class
+com\mobiquity\packer\Packer.class
