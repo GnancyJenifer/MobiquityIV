@@ -1,12 +1,14 @@
 package com.mobiquity.model;
 
+import java.math.BigDecimal;
+
 /**
  * The Class Item.
  */
 public class Item {
 	private final int index;
-	private final double weight;
-	private final double price;
+	private final BigDecimal weight;
+	private final BigDecimal price;
 	
 	/**
 	 * Instantiates a new item.
@@ -15,7 +17,7 @@ public class Item {
 	 * @param weight the weight
 	 * @param price the price
 	 */
-	public Item(int index, double weight, double price) {
+	public Item(int index, BigDecimal weight, BigDecimal price) {
 		super();
 		this.index = index;
 		this.weight = weight;
@@ -36,7 +38,7 @@ public class Item {
 	 *
 	 * @return the weight
 	 */
-	public double getWeight() {
+	public BigDecimal getWeight() {
 		return weight;
 	}
 	
@@ -45,20 +47,19 @@ public class Item {
 	 *
 	 * @return the price
 	 */
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 	
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + index;
-		long temp;
-		temp = Double.doubleToLongBits(price);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(weight);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((weight == null) ? 0 : weight.hashCode());
 		return result;
 	}
 
@@ -73,9 +74,15 @@ public class Item {
 		Item other = (Item) obj;
 		if (index != other.index)
 			return false;
-		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
 			return false;
-		if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
+		if (weight == null) {
+			if (other.weight != null)
+				return false;
+		} else if (!weight.equals(other.weight))
 			return false;
 		return true;
 	}

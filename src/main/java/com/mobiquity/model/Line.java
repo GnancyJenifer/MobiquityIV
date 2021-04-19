@@ -1,22 +1,24 @@
 package com.mobiquity.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
  * The Class Line.
  */
 public class Line {
-	private final double maxWeight;
+	private final BigDecimal maxWeight;
 	private final List<Item> items;
 	
+	
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((items == null) ? 0 : items.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(maxWeight);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((maxWeight == null) ? 0 : maxWeight.hashCode());
 		return result;
 	}
 
@@ -34,7 +36,10 @@ public class Line {
 				return false;
 		} else if (!items.equals(other.items))
 			return false;
-		if (Double.doubleToLongBits(maxWeight) != Double.doubleToLongBits(other.maxWeight))
+		if (maxWeight == null) {
+			if (other.maxWeight != null)
+				return false;
+		} else if (!maxWeight.equals(other.maxWeight))
 			return false;
 		return true;
 	}
@@ -45,7 +50,7 @@ public class Line {
 	 * @param maxWeight the max weight
 	 * @param items the items
 	 */
-	public Line(double maxWeight, List<Item> items) {
+	public Line(BigDecimal maxWeight, List<Item> items) {
 		super();
 		this.maxWeight = maxWeight;
 		this.items = items;
@@ -56,7 +61,7 @@ public class Line {
 	 *
 	 * @return the max weight
 	 */
-	public double getMaxWeight() {
+	public BigDecimal getMaxWeight() {
 		return maxWeight;
 	}
 	

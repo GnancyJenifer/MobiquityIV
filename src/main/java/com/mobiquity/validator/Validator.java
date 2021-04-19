@@ -1,5 +1,7 @@
 package com.mobiquity.validator;
 
+import java.math.BigDecimal;
+
 import com.mobiquity.exception.APIException;
 
 /**
@@ -14,8 +16,8 @@ public class Validator {
 	 * @return true, if successful
 	 * @throws APIException the API exception
 	 */
-	public static boolean validatePackageWeight(double weight) throws APIException{
-		if(weight>100) {
+	public static boolean validatePackageWeight(BigDecimal weight) throws APIException{
+		if(weight.compareTo(new BigDecimal(100))==1) {
 			throw new APIException("Maximum weight for a package should be less than or equal to 100");
 		}
 		else {
@@ -49,11 +51,11 @@ public class Validator {
 	 * @return true, if successful
 	 * @throws APIException the API exception
 	 */
-	public static boolean validateItemWeightAndPrice(double weight,double price) throws APIException{
-		if(weight>100) {
+	public static boolean validateItemWeightAndPrice(BigDecimal weight,BigDecimal price) throws APIException{
+		if(weight.compareTo(new BigDecimal(100))==1) {
 			throw new APIException("Maximum weight for an item should be less than or equal to 100");
 		}
-		if(price>100) {
+		if(price.compareTo(new BigDecimal(100))==1) {
 			throw new APIException("Maximum price for an item should be less than or equal to 100");
 		}
 		else {

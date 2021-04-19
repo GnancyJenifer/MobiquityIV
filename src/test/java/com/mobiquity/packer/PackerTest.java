@@ -2,6 +2,7 @@ package com.mobiquity.packer;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,27 +30,27 @@ public class PackerTest {
 	public static void setUpBeforeClass() throws Exception {
 		lines=new ArrayList<>();
 		List<Item> items=new ArrayList<Item>();
-		items.add(new Item(1,53.38,45));
-		items.add(new Item(2,88.62,98));
-		items.add(new Item(3,78.48,3));
-		items.add(new Item(4,72.30,76));
-		items.add(new Item(5,30.18,9));
-		items.add(new Item(6,46.34,48));
+		items.add(new Item(1,new BigDecimal(53.38),new BigDecimal(45)));
+		items.add(new Item(2,new BigDecimal(88.62),new BigDecimal(98)));
+		items.add(new Item(3,new BigDecimal(78.48),new BigDecimal(3)));
+		items.add(new Item(4,new BigDecimal(72.30),new BigDecimal(76)));
+		items.add(new Item(5,new BigDecimal(30.18),new BigDecimal(9)));
+		items.add(new Item(6,new BigDecimal(46.34),new BigDecimal(48)));
 		List<Item> items2=new ArrayList<Item>();
-		items2.add(new Item(1,15.3,34));
+		items2.add(new Item(1,new BigDecimal(15.3),new BigDecimal(34)));
 		List<Item> items3=new ArrayList<Item>();
-		items3.add(new Item(1,90.72,13));
-		items3.add(new Item(2,33.80,40));
-		items3.add(new Item(3,43.15,10));
-		items3.add(new Item(4,37.97,16));
-		items3.add(new Item(5,46.81,36));
-		items3.add(new Item(6,48.77,79));
-		items3.add(new Item(7,81.80,45));
-		items3.add(new Item(8,19.36,79));
-		items3.add(new Item(9,6.76,64));
-		lines.add(new Line(81, items));
-		lines.add(new Line(8, items2));
-		lines.add(new Line(56, items3));
+		items3.add(new Item(1,new BigDecimal(90.72),new BigDecimal(13)));
+		items3.add(new Item(2,new BigDecimal(33.80),new BigDecimal(40)));
+		items3.add(new Item(3,new BigDecimal(43.15),new BigDecimal(10)));
+		items3.add(new Item(4,new BigDecimal(37.97),new BigDecimal(16)));
+		items3.add(new Item(5,new BigDecimal(46.81),new BigDecimal(36)));
+		items3.add(new Item(6,new BigDecimal(48.77),new BigDecimal(79)));
+		items3.add(new Item(7,new BigDecimal(81.80),new BigDecimal(45)));
+		items3.add(new Item(8,new BigDecimal(19.36),new BigDecimal(79)));
+		items3.add(new Item(9,new BigDecimal(6.76),new BigDecimal(64)));
+		lines.add(new Line(new BigDecimal(81), items));
+		lines.add(new Line(new BigDecimal(8), items2));
+		lines.add(new Line(new BigDecimal(56), items3));
 	}
 
 	@AfterClass
@@ -58,24 +59,13 @@ public class PackerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
 
-	/**
-	 * Validate the read file method.
-	 *
-	 * @throws APIException the API exception
-	 */
-	@Test
-	public void testReadFile() throws APIException {
-		String filePath="D:/Backend code assignment - Mobiquity 2021/src/main/test/resources/example_input6";
-		assertEquals(lines,Packer.readFile(filePath));		
-	}
-	
+		
 	/**
 	 * Pack items test.
 	 *
@@ -83,7 +73,7 @@ public class PackerTest {
 	 */
 	@Test
 	public void packItemsTest() throws APIException {
-		String filePath="D:/Backend code assignment - Mobiquity 2021/src/main/test/resources/example_input";
+		String filePath="src/test/resources/com/mobiquity/packer/example_input";
 		String output=Packer.pack(filePath);
 		String expected="4\n"
 				+ "-\n"
@@ -101,7 +91,7 @@ public class PackerTest {
 	public void whenNoOfItemsForPackageExceedsMax() throws APIException {
 	    exceptionRule.expect(APIException.class);
 	    exceptionRule.expectMessage("Maximum limit for items to choose from should be less than or equal to 15");
-	    String filePath="D:/Backend code assignment - Mobiquity 2021/src/main/test/resources/example_input3";
+	    String filePath="src/test/resources/com/mobiquity/packer/example_input3";
 		Packer.pack(filePath);	
 	}
 	
@@ -114,7 +104,7 @@ public class PackerTest {
 	public void whenWeightForPackageExceedsMax() throws APIException {
 	    exceptionRule.expect(APIException.class);
 	    exceptionRule.expectMessage("Maximum weight for a package should be less than or equal to 100");
-	    String filePath="D:/Backend code assignment - Mobiquity 2021/src/main/test/resources/example_input2";
+	    String filePath="src/test/resources/com/mobiquity/packer/example_input2";
 		Packer.pack(filePath);	
 	}
 	
@@ -128,7 +118,7 @@ public class PackerTest {
 	public void whenWeightForItemExceedsMaxLimit() throws APIException {
 	    exceptionRule.expect(APIException.class);
 	    exceptionRule.expectMessage("Maximum weight for an item should be less than or equal to 100");
-	    String filePath="D:/Backend code assignment - Mobiquity 2021/src/main/test/resources/example_input5";
+	    String filePath="src/test/resources/com/mobiquity/packer/example_input5";
 		Packer.pack(filePath);	
 	}
 	
@@ -142,7 +132,7 @@ public class PackerTest {
 	public void whenPriceForItemExceedsMax() throws APIException {
 	    exceptionRule.expect(APIException.class);
 	    exceptionRule.expectMessage("Maximum price for an item should be less than or equal to 100");
-	    String filePath="D:/Backend code assignment - Mobiquity 2021/src/main/test/resources/example_input4";
+	    String filePath="src/test/resources/com/mobiquity/packer/example_input4";
 		Packer.pack(filePath);	
 	}
 	
@@ -153,20 +143,20 @@ public class PackerTest {
 	 */
 	@Test
 	public void getIndexOfItemsFromPackageListTest() {
-		Item item1=new Item(2,14.34,123);
-		Item item2=new Item(3,14.34,123);
+		Item item1=new Item(2,new BigDecimal(14.34),new BigDecimal(123));
+		Item item2=new Item(3,new BigDecimal(14.34),new BigDecimal(123));
 		List<Item> items=new ArrayList<>();
 		items.add(item1);
 		items.add(item2);
-		Item item3=new Item(4,14.34,123);
-		Item item4=new Item(5,14.34,123);
+		Item item3=new Item(4,new BigDecimal(14.34),new BigDecimal(123));
+		Item item4=new Item(5,new BigDecimal(14.34),new BigDecimal(123));
 		List<Item> items2=new ArrayList<>();
 		items2.add(item3);
 		items2.add(item4);
 		List<Item> items3=new ArrayList<>();
-		Package pack=new Package(0, items);
-		Package pack1=new Package(0, items2);
-		Package pack2=new Package(0, items3);
+		Package pack=new Package(new BigDecimal(0), items);
+		Package pack1=new Package(new BigDecimal(0), items2);
+		Package pack2=new Package(new BigDecimal(0), items3);
 		List<Package> packs=new ArrayList<>();
 		packs.add(pack);
 		packs.add(pack1);
@@ -182,12 +172,12 @@ public class PackerTest {
 	 */
 	@Test
 	public void getIndexOfItemsTest() {
-		Item item1=new Item(2,14.34,123);
-		Item item2=new Item(3,14.34,123);
+		Item item1=new Item(2,new BigDecimal(14.34),new BigDecimal(123));
+		Item item2=new Item(3,new BigDecimal(14.34),new BigDecimal(123));
 		List<Item> items=new ArrayList<>();
 		items.add(item1);
 		items.add(item2);
-		Package pack=new Package(0, items);
+		Package pack=new Package(new BigDecimal(0), items);;
 		String expectedOutput="2,3";
 		assertEquals(expectedOutput, pack.getIndexOfItems(","));
 	}
@@ -199,8 +189,8 @@ public class PackerTest {
 	public void testOptimalPackage() {
 		Package pack=Packer.findOptimalPackage(PackerTest.lines.get(0));
 		List<Item> items =new ArrayList<Item>();
-		items.add(new Item(4,72.30,76));
-		Package expectedPackage=new Package(76d,items);
+		items.add(new Item(4,new BigDecimal(72.30),new BigDecimal(76)));
+		Package expectedPackage=new Package(new BigDecimal(76),items);
 		assertEquals(expectedPackage, pack);
 	}	
 	

@@ -1,12 +1,13 @@
 package com.mobiquity.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
  * The Class Package.
  */
 public class Package {
-	private final double maxPrice;
+	private final BigDecimal maxPrice;
 	private final List<Item> items;
 
 	/**
@@ -15,7 +16,7 @@ public class Package {
 	 * @param maxPrice the max price
 	 * @param items the items
 	 */
-	public Package(double maxPrice, List<Item> items) {
+	public Package(BigDecimal maxPrice, List<Item> items) {
 		super();
 		this.maxPrice = maxPrice;
 		this.items = items;
@@ -26,7 +27,7 @@ public class Package {
 	 *
 	 * @return the max price
 	 */
-	public double getMaxPrice() {
+	public BigDecimal getMaxPrice() {
 		return maxPrice;
 	}
 
@@ -88,28 +89,15 @@ public class Package {
 		return "Package [maxPrice=" + maxPrice + ", items=" + items + "]";
 	}
 
-	/**
-	 * Hash code.
-	 *
-	 * @return the int
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((items == null) ? 0 : items.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(maxPrice);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((maxPrice == null) ? 0 : maxPrice.hashCode());
 		return result;
 	}
 
-	/**
-	 * Equals.
-	 *
-	 * @param obj the obj
-	 * @return true, if successful
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -124,9 +112,14 @@ public class Package {
 				return false;
 		} else if (!items.equals(other.items))
 			return false;
-		if (Double.doubleToLongBits(maxPrice) != Double.doubleToLongBits(other.maxPrice))
+		if (maxPrice == null) {
+			if (other.maxPrice != null)
+				return false;
+		} else if (!maxPrice.equals(other.maxPrice))
 			return false;
 		return true;
 	}
+
+	
 
 }

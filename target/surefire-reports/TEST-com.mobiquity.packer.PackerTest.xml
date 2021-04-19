@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="9" failures="0" name="com.mobiquity.packer.PackerTest" time="0.042" errors="0" skipped="0">
+<testsuite tests="8" failures="0" name="com.mobiquity.packer.PackerTest" time="0.041" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="11.0.10+8-LTS-162"/>
@@ -28,7 +28,6 @@
     <property name="os.name" value="Windows 10"/>
     <property name="classworlds.conf" value="D:\apache-maven-3.8.1-bin\apache-maven-3.8.1\bin\..\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="sonar.login" value="203a134b34e37f930652b26450b46b7dcc4c4a07"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk-11.0.10\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Java\jre1.8.0_281\bin;D:\apache-maven-3.8.1-bin\apache-maven-3.8.1\bin;C:\Users\gnanc\AppData\Local\Microsoft\WindowsApps;;."/>
     <property name="maven.conf" value="D:\apache-maven-3.8.1-bin\apache-maven-3.8.1\bin\../conf"/>
     <property name="jdk.debug" value="release"/>
@@ -46,7 +45,7 @@
     <property name="java.class.path" value="D:\apache-maven-3.8.1-bin\apache-maven-3.8.1\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
     <property name="java.vm.specification.version" value="11"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean verify sonar:sonar -Dsonar.login=203a134b34e37f930652b26450b46b7dcc4c4a07"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-11.0.10"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -66,13 +65,12 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.mobiquity.packer.PackerTest" name="testOptimalPackage" time="0.011"/>
+  <testcase classname="com.mobiquity.packer.PackerTest" name="testOptimalPackage" time="0.01"/>
   <testcase classname="com.mobiquity.packer.PackerTest" name="getIndexOfItemsFromPackageListTest" time="0.014"/>
   <testcase classname="com.mobiquity.packer.PackerTest" name="packItemsTest" time="0.007"/>
-  <testcase classname="com.mobiquity.packer.PackerTest" name="testReadFile" time="0.001"/>
   <testcase classname="com.mobiquity.packer.PackerTest" name="getIndexOfItemsTest" time="0"/>
   <testcase classname="com.mobiquity.packer.PackerTest" name="whenNoOfItemsForPackageExceedsMax" time="0.006"/>
-  <testcase classname="com.mobiquity.packer.PackerTest" name="whenWeightForPackageExceedsMax" time="0"/>
+  <testcase classname="com.mobiquity.packer.PackerTest" name="whenWeightForPackageExceedsMax" time="0.001"/>
   <testcase classname="com.mobiquity.packer.PackerTest" name="whenWeightForItemExceedsMaxLimit" time="0.001"/>
   <testcase classname="com.mobiquity.packer.PackerTest" name="whenPriceForItemExceedsMax" time="0.002"/>
 </testsuite>

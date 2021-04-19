@@ -2,6 +2,7 @@ package com.mobiquity.packer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -59,6 +60,7 @@ public class Packer {
 		try (BufferedReader bufferedReader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
 			linesList = bufferedReader.lines().collect(Collectors.toList());
 		} catch (IOException e) {
+			System.out.println(e);
 			throw new APIException(e.getMessage());
 		}
 		for (String s : linesList) {
@@ -91,12 +93,12 @@ public class Packer {
 	 * @throws APIException the API exception
 	 */
 	public static Line parseLine(String line) throws APIException {
-		double maxLimit = 0d;
+		BigDecimal maxLimit =null;
 		List<Item> items = null;
 		try {
 			String[] maxWeightAndItemSplit = line.split(":");
 			if (maxWeightAndItemSplit != null && maxWeightAndItemSplit.length > 0) {
-				maxLimit = Double.parseDouble(maxWeightAndItemSplit[0].trim());
+				maxLimit = new BigDecimal(maxWeightAndItemSplit[0].trim());
 				String itemsBeforeSplit = maxWeightAndItemSplit[1].trim();
 				String[] itemsSplit = itemsBeforeSplit.split("\\)\\s*\\(");
 				Validator.validatePackageWeight(maxLimit);
@@ -108,8 +110,8 @@ public class Packer {
 								.replaceAll("\\u20ac", "").trim();
 						String indexWgtPriceSplit[] = itemsAfterRemovingBraces.split(",");
 						int index = Integer.parseInt(indexWgtPriceSplit[0]);
-						double weight = Double.parseDouble(indexWgtPriceSplit[1]);
-						double price = Double.parseDouble(indexWgtPriceSplit[2]);
+						BigDecimal weight = new BigDecimal(indexWgtPriceSplit[1]);
+						BigDecimal price = new BigDecimal(indexWgtPriceSplit[2]);
 						Validator.validateItemWeightAndPrice(weight, price);
 						items.add(new Item(index, weight, price));
 					}
@@ -133,28 +135,28 @@ public class Packer {
 	 * @param limit the limit
 	 * @return the list
 	 */
-	public static List<Package> findPossiblePackages(List<Item> items, double limit) {
+	public static List<Package> findPossiblePackages(List<Item> items, BigDecimal limit) {
 		Comparator<Item> compareByPriceAndWeight = Comparator.comparing(Item::getPrice).reversed()
 				.thenComparing(Item::getWeight);
 		List<Item> sortedItems = items.stream().sorted(compareByPriceAndWeight).collect(Collectors.toList());
 		List<Package> packages = new ArrayList<>();
 		for (int i = 0; i <= sortedItems.size() - 1; i++) {
-			double maxWeight = sortedItems.get(i).getWeight();
-			double maxPrice = sortedItems.get(i).getPrice();
+			BigDecimal maxWeight = sortedItems.get(i).getWeight();
+			BigDecimal maxPrice = sortedItems.get(i).getPrice();
 			List<Item> itemList = new ArrayList<>();
-			if (maxWeight <= limit) {
+			if (maxWeight.compareTo(limit)== -1 || maxWeight.compareTo(limit)==0) {
 				itemList.add(sortedItems.get(i));
 				for (int j = i + 1; j <= sortedItems.size() - 1; j++) {
-					double wt = maxWeight + sortedItems.get(j).getWeight();
-					if (wt <= limit) {
-						maxWeight += sortedItems.get(j).getWeight();
-						maxPrice += sortedItems.get(j).getPrice();
+					BigDecimal wt = maxWeight.add(sortedItems.get(j).getWeight());
+					if (wt.compareTo(limit)==-1 || wt.compareTo(limit) == 0) {
+						maxWeight = maxWeight.add(sortedItems.get(j).getWeight());
+						maxPrice =maxPrice.add( sortedItems.get(j).getPrice());
 						itemList.add(sortedItems.get(j));
 					}
 				}
 				packages.add(new Package(maxPrice, itemList));
 			} else {
-				packages.add(new Package(0d, itemList));
+				packages.add(new Package(new BigDecimal(0), itemList));
 			}
 		}
 		return packages;
